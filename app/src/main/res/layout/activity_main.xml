@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.home.osstest.MainActivity">
+
+    <EditText
+        android:id="@+id/idTextField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="117dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="139dp"
+        android:ems="10"
+        android:hint="아이디를 입력하세요."
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/passTextField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="264dp"
+        android:layout_marginEnd="117dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="비밀번호를 입력하세요."
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/idTextField" />
+
+    <Button
+        android:id="@+id/logInBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="107dp"
+        android:layout_marginBottom="264dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="139dp"
+        android:text="log In"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/passTextField"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/facebookLogBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="8dp"
+        android:drawableLeft="@drawable/facebook_icon_favorite"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="0dp"
+        android:text="FaceBook"
+        android:textAllCaps="false"
+        android:textSize="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/twitterLogBtn"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passTextField"
+        app:layout_constraintVertical_bias="0.018" />
+
+    <Button
+        android:id="@+id/twitterLogBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="137dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="12dp"
+        android:drawableLeft="@drawable/twitter_icon_favorite"
+        android:freezesText="false"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="0dp"
+        android:text="Twitter"
+        android:textAllCaps="false"
+        android:textSize="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/facebookLogBtn"
+        app:layout_constraintTop_toBottomOf="@+id/passTextField"
+        app:layout_constraintVertical_bias="0.0" />
+
+</android.support.constraint.ConstraintLayout>
