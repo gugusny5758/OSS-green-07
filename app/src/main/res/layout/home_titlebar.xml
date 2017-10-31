@@ -8,9 +8,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="카드 뉴스"
+        android:text="    카드 뉴스"
         android:textColor="#ffffff"
         android:id="@+id/mytext"
         android:textSize="18sp" />
+
 
 </LinearLayout>
