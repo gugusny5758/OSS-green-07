@@ -3,6 +3,7 @@ package com.example.home.osstest;
 import android.annotation.TargetApi;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +32,7 @@ import java.util.HashMap;
 public class CardNewsAdapter extends RecyclerView.Adapter<CardNewsAdapter.ViewHolder> {
     Context context;
     ArrayList<CardNewsItem> cardNewsList; //각 Card에 대한 정보를 담고 있음.
+    CardNewsItem cardNewsItem;
 
     public CardNewsAdapter(Context context, ArrayList<CardNewsItem> cardNewsList) {
         this.context = context;
@@ -47,9 +50,9 @@ public class CardNewsAdapter extends RecyclerView.Adapter<CardNewsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-
-        CardNewsItem cardNewsItem = cardNewsList.get(position);
-
+        Log.d("Selected Num : ", String.valueOf(position));
+        cardNewsItem = cardNewsList.get(position);
+        holder.imageView.setTag(position);
         String where = cardNewsItem.getWhere();
 
         holder.fromContent.setText(where);
@@ -81,8 +84,13 @@ public class CardNewsAdapter extends RecyclerView.Adapter<CardNewsAdapter.ViewHo
 
         //카드를 클릭했을 때 이벤트
         holder.imageView.setOnClickListener(new View.OnClickListener() {
+
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), holder.fromContent.getText() + " Card", Toast.LENGTH_SHORT).show();
+                Intent cardNews_view = new Intent(context.getApplicationContext(),CardNewsView.class);
+                cardNews_view.putExtra("Cards",cardNewsList.get((int)holder.imageView.getTag()).getCards());
+                context.startActivity(cardNews_view);
+
+
             }
         });
 
@@ -94,6 +102,8 @@ public class CardNewsAdapter extends RecyclerView.Adapter<CardNewsAdapter.ViewHo
         });
 
     }
+
+
 
     @Override
     public int getItemCount() {

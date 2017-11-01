@@ -8,26 +8,24 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.nileshp.multiphotopicker.photopicker.activity.PickImageActivity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
 
 /**
  * Created by Home on 2017-10-28.
  */
 
 public class HomeActivity extends AppCompatActivity {
+
     ArrayList<CardNewsItem> cardNewsList;
     CardNewsAdapter adapter;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_view);
