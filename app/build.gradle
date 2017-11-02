@@ -2,11 +2,9 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-
     repositories {
         mavenCentral()
     }
-
     defaultConfig {
         applicationId "com.example.home.osstest"
         minSdkVersion 21
