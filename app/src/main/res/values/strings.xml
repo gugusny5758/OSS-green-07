@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">OSSTest</string>
+    <string name="com.twitter.sdk.android.CONSUMER_KEY">vjsomtQmsznhYVPqYqbWKQHVC</string>
+    <string name="com.twitter.sdk.android.CONSUMER_SECRET">WUdyADzUAord54zahdFfx8ksbl1y9NKyKwbPid3IT9JkJqdc9B</string>
 </resources>

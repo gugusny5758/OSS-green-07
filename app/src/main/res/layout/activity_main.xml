@@ -57,8 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginStart="70dp"
+        android:layout_marginStart="56dp"
         android:layout_marginTop="8dp"
         android:drawableLeft="@drawable/facebook_icon_favorite"
         android:paddingHorizontal="10dp"
@@ -67,31 +66,40 @@
         android:textAllCaps="false"
         android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/twitterLogBtn"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passTextField"
         app:layout_constraintVertical_bias="0.018" />
 
-    <Button
+    <com.twitter.sdk.android.core.identity.TwitterLoginButton
         android:id="@+id/twitterLogBtn"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="137dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="12dp"
-        android:drawableLeft="@drawable/twitter_icon_favorite"
-        android:freezesText="false"
+        android:layout_marginTop="16dp"
         android:paddingHorizontal="10dp"
         android:paddingVertical="0dp"
-        android:text="Twitter"
-        android:textAllCaps="false"
-        android:textSize="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/facebookLogBtn"
-        app:layout_constraintTop_toBottomOf="@+id/passTextField"
-        app:layout_constraintVertical_bias="0.0" />
+        android:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@+id/facebookLogBtn" />
+
+    <!--<Button-->
+        <!--android:id="@+id/twitterLogBtn"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="30dp"-->
+        <!--android:layout_marginBottom="8dp"-->
+        <!--android:layout_marginEnd="137dp"-->
+        <!--android:layout_marginStart="10dp"-->
+        <!--android:layout_marginTop="12dp"-->
+        <!--android:drawableLeft="@drawable/twitter_icon_favorite"-->
+        <!--android:freezesText="false"-->
+        <!--android:paddingHorizontal="10dp"-->
+        <!--android:paddingVertical="0dp"-->
+        <!--android:text="Twitter"-->
+        <!--android:textAllCaps="false"-->
+        <!--android:textSize="10dp"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toEndOf="@+id/facebookLogBtn"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/passTextField"-->
+        <!--app:layout_constraintVertical_bias="0.0" />-->
 
 </android.support.constraint.ConstraintLayout>

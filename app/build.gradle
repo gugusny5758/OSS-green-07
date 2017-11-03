@@ -5,12 +5,13 @@ android {
 
     repositories {
         mavenCentral()
+        jcenter()
     }
 
     defaultConfig {
         applicationId "com.example.home.osstest"
         minSdkVersion 21
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -37,4 +38,8 @@ dependencies {
     implementation 'com.android.support:support-v4:27.0.0'
     compile 'com.github.nileshpambhar:MultiPhotoPicker:v1.2'
     compile 'com.facebook.android:facebook-android-sdk:4.+'
+    // Include all the Twitter APIs
+    compile 'com.twitter.sdk.android:twitter:3.1.1'
+    // (Optional) Monetize using mopub
+    compile 'com.twitter.sdk.android:twitter-mopub:3.1.1'
 }
