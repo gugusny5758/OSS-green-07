@@ -20,6 +20,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -98,6 +102,23 @@ public class CardNewsAdapter extends RecyclerView.Adapter<CardNewsAdapter.ViewHo
         holder.shareBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), "공유하기", Toast.LENGTH_SHORT).show();
+                try {
+                    SharePhotoContent.Builder content = new SharePhotoContent.Builder();
+
+                    for (int i=0;i<cardNewsItem.size();i++) {
+                        Uri uri = Uri.fromFile(new File(cardNewsItem.getCards().get(0)));
+                        Bitmap image = MediaStore.Images.Media.getBitmap(context.getContentResolver(),uri);
+                        SharePhoto photo = new SharePhoto.Builder()
+                                .setBitmap(image)
+                                .build();
+
+                        content.addPhoto(photo);
+                    }
+
+                    content.build();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 

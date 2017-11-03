@@ -22,4 +22,6 @@ public class CardNewsItem {
     public ArrayList<String> getCards(){
         return cards;
     }
+
+    public int size() { return cards.size(); }
 }
