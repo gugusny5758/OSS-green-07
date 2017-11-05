@@ -1,6 +1,5 @@
 package com.example.home.osstest;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -12,154 +11,103 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.twitter.sdk.android.core.Callback;
-import com.twitter.sdk.android.core.DefaultLogger;
-import com.twitter.sdk.android.core.Result;
-import com.twitter.sdk.android.core.Twitter;
-import com.twitter.sdk.android.core.TwitterAuthConfig;
-import com.twitter.sdk.android.core.TwitterConfig;
-import com.twitter.sdk.android.core.TwitterException;
-import com.twitter.sdk.android.core.TwitterSession;
-import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.login.LoginManager;
+import com.facebook.internal.CallbackManagerImpl;
 import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.Twitter;
+import com.twitter.sdk.android.core.TwitterAuthToken;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterLoginButton;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
+
+    private TwitterLoginButton twitterLoginButton;
     private CallbackManager callbackManager;
-
-
-    private TwitterLoginButton loginButton;
-
-    private static final String key = "vjsomtQmsznhYVPqYqbWKQHVC";
-    private static final String secret = "WUdyADzUAord54zahdFfx8ksbl1y9NKyKwbPid3IT9JkJqdc9B";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        TwitterConfig config = new TwitterConfig.Builder(this)
-                .logger(new DefaultLogger(Log.DEBUG))
-                .twitterAuthConfig(new TwitterAuthConfig(key, secret))
-                .debug(true)
-                .build();
-        Twitter.initialize(config);
+
+        Twitter.initialize(this);
         setContentView(R.layout.activity_main);
 
         final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         final EditText selectEditText = (EditText) findViewById(R.id.passTextField);
 
-        loginButton = findViewById(R.id.twitterLogBtn);
-        loginButton.setCallback(new Callback<TwitterSession>() {
-            @Override
-            public void success(Result<TwitterSession> result) {
-                // Do something with result, which provides a TwitterSession for making API calls
-                Log.d("Twiter-Auth","Login Success");
-                ((EditText) findViewById(R.id.passTextField)).setText("");//입력했던 비밀번호 리셋
-                Intent home_view = new Intent(getApplicationContext(),HomeActivity.class);
-                startActivity(home_view);
-            }
-
-            @Override
-            public void failure(TwitterException exception) {
-                // Do something on failure
-                Log.d("Twiter-Auth","Login Failure");
-                Toast.makeText(getApplicationContext(), "아이디/비밀번호를 확인하세요.",Toast.LENGTH_SHORT).show();
-            }
-        });
         Button.OnClickListener onClickListener = new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
                 imm.hideSoftInputFromWindow(selectEditText.getWindowToken(),0);
+
                 switch (view.getId()) {
                     case R.id.logInBtn :
 //                        메인 로그인 버튼 이벤트
-//                            if(mainLogInCheck()){
-                            if(true){
+//                           if(mainLogInCheck()){
+                        if(true){
                                 ((EditText) findViewById(R.id.passTextField)).setText("");//입력했던 비밀번호 리셋
                                 Intent home_view = new Intent(getApplicationContext(),HomeActivity.class);
+                               home_view.putExtra("userName","Tester");
+                               home_view.putExtra("from", "main");
                                 startActivity(home_view);
                             }else
                                 Toast.makeText(getApplicationContext(), "아이디/비밀번호를 확인하세요.",Toast.LENGTH_SHORT).show();
                         break ;
                     case R.id.facebookLogBtn :
-                        facebookLoginOnClick();
-                        Toast.makeText(getApplicationContext(), "FaceBook 로그인",Toast.LENGTH_SHORT).show();
+//                        페이스북 로그인 버튼 이벤트
+                        faceBookLogIn();
                         break ;
-                    case R.id.twitterLogBtn :
-//                        트위터 로그인 버튼 이벤트
-                        Toast.makeText(getApplicationContext(), "Twitter 로그인",Toast.LENGTH_SHORT).show();
-
-                        break ;
-
+//트위터는 버튼 특성에 따라서 따로 만듬.
                     default:
                         break ;
                 }
             }
         } ;
 
-        int[] btnItem = {R.id.logInBtn, R.id.facebookLogBtn, R.id.twitterLogBtn};
+        int[] btnItem = {R.id.logInBtn, R.id.facebookLogBtn};
 
         for(int id : btnItem){
             Button btn = (Button) findViewById(id);
             btn.setOnClickListener(onClickListener);
         }
 
-    }
-
-    public void facebookLoginOnClick(){
-
-        callbackManager = CallbackManager.Factory.create();
-
-        LoginManager.getInstance().logInWithReadPermissions(MainActivity.this,
-                Arrays.asList("public_profile", "email"));
-        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-
+        //트위터 버튼 이벤트 설정
+        twitterLoginButton = (TwitterLoginButton) findViewById(R.id.twitterLogBtn);
+        twitterLoginButton.setCallback(new Callback<TwitterSession>() {
             @Override
-            public void onSuccess(final LoginResult result) {
+            public void success(Result<TwitterSession> result) {
+                // Do something with result, which provides a TwitterSession for making API calls
 
-                GraphRequest request;
-                request = GraphRequest.newMeRequest(result.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                TwitterSession session = TwitterCore.getInstance().getSessionManager().getActiveSession();
 
-                    @Override
-                    public void onCompleted(JSONObject user, GraphResponse response) {
-                        if (response.getError() != null) {
-
-                        } else {
-                            Log.i("TAG", "user: " + user.toString());
-                            Log.i("TAG", "AccessToken: " + result.getAccessToken().getToken());
-                            setResult(RESULT_OK);
-
-                            Intent i = new Intent(MainActivity.this, HomeActivity.class);
-                            startActivity(i);
-                            finish();
-                        }
-                    }
-                });
-                Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,name,email,gender,birthday");
-                request.setParameters(parameters);
-                request.executeAsync();
+                String userName = session.getUserName();
+                Intent home_view = new Intent(getApplicationContext(),HomeActivity.class);
+                home_view.putExtra("userName",userName);
+                home_view.putExtra("from", "twitter");
+                startActivity(home_view);
             }
 
             @Override
-            public void onError(FacebookException error) {
-                Log.e("test", "Error: " + error);
-                //finish();
-            }
-
-            @Override
-            public void onCancel() {
-                //finish();
+            public void failure(TwitterException exception) {
+                // Do something on failure
+                Toast.makeText(getApplicationContext(), "아이디/비밀번호를 확인하세요.",Toast.LENGTH_SHORT).show();
             }
         });
+
+
     }
 
     private boolean mainLogInCheck(){
@@ -175,18 +123,62 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void faceBookLogIn(){
+        callbackManager = CallbackManager.Factory.create();
 
-    @Override
+        LoginButton loginButton = (LoginButton) findViewById(R.id.facebookLogBtn);
+        loginButton.setReadPermissions(Arrays.asList("public_profile", "email"));
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                GraphRequest graphRequest = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject object, GraphResponse response) {
+
+                        Intent home_view = new Intent(MainActivity.this,HomeActivity.class);
+                        try {
+                            home_view.putExtra("userName", (String) object.get("name"));
+                            home_view.putExtra("from", "faceBook");
+                        }catch (JSONException e){
+
+                        }
+                        startActivity(home_view);
+
+                    }
+                });
+
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,email,gender,birthday");
+                graphRequest.setParameters(parameters);
+                graphRequest.executeAsync();
+            }
+
+            @Override
+            public void onCancel() {
+                setResult(3);
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.e("LoginErr",error.toString());
+            }
+        });
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // Pass the activity result to the login button.
-        loginButton.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CallbackManagerImpl.RequestCodeOffset.Login.toRequestCode()) {
+            Log.d("ResultCode", "페이스북 로그인");
+            callbackManager.onActivityResult(requestCode, resultCode, data);
+        }else{
+            Log.d("ResultCode", "트위터 로그인");
+            twitterLoginButton.onActivityResult(requestCode, resultCode, data);
+        }
 
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+
     }
+
 }
-
-
 
 

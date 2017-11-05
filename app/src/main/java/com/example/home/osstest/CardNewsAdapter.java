@@ -1,33 +1,28 @@
 package com.example.home.osstest;
 
 import android.annotation.TargetApi;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.share.model.ShareLinkContent;
-import com.facebook.share.model.SharePhoto;
-import com.facebook.share.model.SharePhotoContent;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+
+
 
 /**
  * Created by Home on 2017-10-28.
@@ -54,34 +49,35 @@ public class CardNewsAdapter extends RecyclerView.Adapter<CardNewsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        Log.d("Selected Num : ", String.valueOf(position));
         cardNewsItem = cardNewsList.get(position);
         holder.imageView.setTag(position);
-        String where = cardNewsItem.getWhere();
 
-        holder.fromContent.setText(where);
+        String where = cardNewsItem.getWhere();
+        String headline = cardNewsItem.getHeadline();
+
+        holder.fromContent.setText(headline);
+
         if (cardNewsItem.getCards() != null) {
 
-                //이미지를 가져옴
-                Uri uri = Uri.fromFile(new File(cardNewsItem.getCards().get(0)));
+            //이미지를 가져옴
+            Uri uri = Uri.fromFile(new File(cardNewsItem.getCards().get(0)));
 
-                try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(),uri);
-                    int nh = (int) (bitmap.getHeight() * (1024.0 / bitmap.getWidth()));
-                    Bitmap scaled = Bitmap.createScaledBitmap(bitmap, 1024, nh, true);
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);
+                int nh = (int) (bitmap.getHeight() * (1024.0 / bitmap.getWidth()));
+                Bitmap scaled = Bitmap.createScaledBitmap(bitmap, 1024, nh, true);
 
-                    holder.imageView.setImageBitmap(scaled);
+                holder.imageView.setImageBitmap(scaled);
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
 
         }
         if (where.equals("FaceBook"))
             holder.fromImg.setImageResource(R.drawable.facebook_icon_favorite);
-        else if(where.equals("Twitter"))
+        else if (where.equals("Twitter"))
             holder.fromImg.setImageResource(R.drawable.twitter_icon_favorite);
         else
             holder.fromImg.setImageResource(R.drawable.default_favorite_icon);
@@ -90,40 +86,24 @@ public class CardNewsAdapter extends RecyclerView.Adapter<CardNewsAdapter.ViewHo
         holder.imageView.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                Intent cardNews_view = new Intent(context.getApplicationContext(),CardNewsView.class);
-                cardNews_view.putExtra("Cards",cardNewsList.get((int)holder.imageView.getTag()).getCards());
+                Intent cardNews_view = new Intent(context.getApplicationContext(), CardNewsView.class);
+                cardNews_view.putExtra("item", cardNewsList.get((int) holder.imageView.getTag()));
                 context.startActivity(cardNews_view);
-
-
             }
         });
 
         //공유버튼을 클릭했을 때 이벤트
         holder.shareBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
                 Toast.makeText(v.getContext(), "공유하기", Toast.LENGTH_SHORT).show();
-                try {
-                    SharePhotoContent.Builder content = new SharePhotoContent.Builder();
+                ((HomeActivity)context).shareImage(cardNewsItem.getCards());
 
-                    for (int i=0;i<cardNewsItem.size();i++) {
-                        Uri uri = Uri.fromFile(new File(cardNewsItem.getCards().get(0)));
-                        Bitmap image = MediaStore.Images.Media.getBitmap(context.getContentResolver(),uri);
-                        SharePhoto photo = new SharePhoto.Builder()
-                                .setBitmap(image)
-                                .build();
 
-                        content.addPhoto(photo);
-                    }
-
-                    content.build();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
             }
         });
 
     }
-
 
 
     @Override
