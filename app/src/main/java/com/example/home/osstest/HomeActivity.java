@@ -48,7 +48,7 @@ public class HomeActivity extends AppCompatActivity {
         callbackManager  = CallbackManager.Factory.create();
         shareDialog = new ShareDialog(this);
 
-        //타이틀바의 글자를 중앙으로 만들기위해서 CustomBar를 제작.
+        //타이틀바의 글자를 중앙으로 만들기위해서 CustomBar를 제작.      //Custom Bar for letter to Center
         this.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         this.getSupportActionBar().setCustomView(R.layout.home_titlebar);
 
@@ -62,21 +62,21 @@ public class HomeActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         rv.setLayoutManager(layoutManager);
 
-        //카드 리스트뷰 어댑터에 연결
+        //카드 리스트뷰 어댑터에 연결       //Connect Card View List to Adapter
         adapter = new CardNewsAdapter(this, cardNewsList);
         rv.setAdapter(adapter);
 
         adapter.notifyDataSetChanged();
 
-        Toast.makeText(getApplicationContext(), this.getIntent().getStringExtra("userName")+"님 환영합니다.",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), this.getIntent().getStringExtra("userName")+"님 환영합니다.",Toast.LENGTH_SHORT).show();  //"Welcome (username)"
 
     }
 
-    //Home 메뉴에 대한 이벤트
+    //Home 메뉴에 대한 이벤트       //Home Menu Event
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.addCard: //Card 생성 이벤트
+            case R.id.addCard: //Card 생성 이벤트    //Card Create Event
             {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Title");
@@ -110,35 +110,35 @@ public class HomeActivity extends AppCompatActivity {
             }
             return true;
 
-            case R.id.removeCard://Card  삭제 이벤트
+            case R.id.removeCard://Card  삭제 이벤트 //Card Remove Event
 
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    //현재 Activity에 메뉴 Layout을 지정함.
+    //현재 Activity에 메뉴 Layout을 지정함.      //Set Menu Layout on current Activity
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home_menu, menu);
         return true;
     }
 
-    //Home 화면에서 뒤로가기 버튼 이벤트
+    //Home 화면에서 뒤로가기 버튼 이벤트     //BackPressed Event on Home
     public void onBackPressed() {
         AlertDialog.Builder logout = new AlertDialog.Builder(this);
-        logout.setTitle("안내");
+        logout.setTitle("안내"); //"Logout"
         logout
-                .setMessage("로그아웃하시겠습니까?")
+                .setMessage("로그아웃하시겠습니까?")  //"Are you sure you want to Log out?"
                 .setCancelable(false)
                 .setNegativeButton("취소", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                    public void onClick(DialogInterface dialogInterface, int i) {   //"Cancel"
                         dialogInterface.cancel();
                     }
                 })
                 .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                    public void onClick(DialogInterface dialogInterface, int i) {   //"OK"
                         HomeActivity.super.onBackPressed();
                     }
                 });
@@ -150,7 +150,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, intent);
 
         if (resultCode == -1 && requestCode == PickImageActivity.PICKER_REQUEST_CODE) {
-            //가지고 온 이미지들을 이용하여 CardNews 객체 생성.
+            //가지고 온 이미지들을 이용하여 CardNews 객체 생성.  //Create CardNews Object from brought Images
             CardNewsItem item = new CardNewsItem(this.getIntent().getStringExtra("from"), intent.getExtras().getStringArrayList(PickImageActivity.KEY_DATA_RESULT),headLine);
             cardNewsList.add(item);
             adapter.notifyDataSetChanged();

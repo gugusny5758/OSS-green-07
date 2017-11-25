@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (view.getId()) {
                     case R.id.logInBtn :
-//                        메인 로그인 버튼 이벤트
+//                        메인 로그인 버튼 이벤트     //Main Login Button Event
 //                           if(mainLogInCheck()){
                         if(true){
                                 ((EditText) findViewById(R.id.passTextField)).setText("");//입력했던 비밀번호 리셋
@@ -64,13 +64,14 @@ public class MainActivity extends AppCompatActivity {
                                home_view.putExtra("from", "main");
                                 startActivity(home_view);
                             }else
-                                Toast.makeText(getApplicationContext(), "아이디/비밀번호를 확인하세요.",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(),"아이디/비밀번호를 확인하세요." ,Toast.LENGTH_SHORT).show();
+                        //"Please Check Your User ID / Password."
                         break ;
                     case R.id.facebookLogBtn :
-//                        페이스북 로그인 버튼 이벤트
+//                        페이스북 로그인 버튼 이벤트   //Facebook Login Button Event
                         faceBookLogIn();
                         break ;
-//트위터는 버튼 특성에 따라서 따로 만듬.
+//트위터는 버튼 특성에 따라서 따로 만듬.        //Twitter Button not here
                     default:
                         break ;
                 }
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             btn.setOnClickListener(onClickListener);
         }
 
-        //트위터 버튼 이벤트 설정
+        //트위터 버튼 이벤트 설정     //Twitter Login Button Event
         twitterLoginButton = (TwitterLoginButton) findViewById(R.id.twitterLogBtn);
         twitterLoginButton.setCallback(new Callback<TwitterSession>() {
             @Override
@@ -103,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void failure(TwitterException exception) {
                 // Do something on failure
-                Toast.makeText(getApplicationContext(), "아이디/비밀번호를 확인하세요.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "아이디/비밀번호를 확인하세요." ,Toast.LENGTH_SHORT).show();    //"Please Check Your User ID / Password."
             }
         });
 
@@ -169,10 +170,10 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == CallbackManagerImpl.RequestCodeOffset.Login.toRequestCode()) {
-            Log.d("ResultCode", "페이스북 로그인");
+            Log.d("ResultCode", "페이스북 로그인");    //"facebook login"
             callbackManager.onActivityResult(requestCode, resultCode, data);
         }else{
-            Log.d("ResultCode", "트위터 로그인");
+            Log.d("ResultCode", "트위터 로그인"); //"twitter login"
             twitterLoginButton.onActivityResult(requestCode, resultCode, data);
         }
 
