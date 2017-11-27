@@ -13,4 +13,4 @@
 
 ### License
 
-We used **FaceBook Login API** that is licensed under [Apache License].
+We used **FaceBook Login API** that is licensed under [Apache License](https://github.com/promisemee/purple-03/blob/master/LICENSE).
