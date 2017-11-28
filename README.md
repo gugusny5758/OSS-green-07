@@ -11,6 +11,6 @@
 3. If you want to contribute content to this repo, please give us non-exclusive license to use that content for our project, as we deem appropriate.
 
 
-### License
+## License
 
 We used **FaceBook Login API** that is licensed under [Apache License](https://github.com/promisemee/purple-03/blob/master/LICENSE).
