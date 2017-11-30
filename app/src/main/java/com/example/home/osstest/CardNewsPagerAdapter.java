@@ -30,7 +30,7 @@ public class CardNewsPagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position){
         View v = inflater.inflate(R.layout.viewpager_image,null);
         ImageView imgView = (ImageView) v.findViewById(R.id.viewPagerImage);
-        //이미지를 가져옴
+        //이미지를 가져옴  //Bring Image
         Uri uri = Uri.fromFile(new File(cards.get(position)));
 
         try {
@@ -48,7 +48,7 @@ public class CardNewsPagerAdapter extends PagerAdapter {
         return v;
     }
 
-    //Page에서 보이지 않는 View를 제거해주는 Method
+    //Page에서 보이지 않는 View를 제거해주는 Method      //Method : Remove View Unseen at Page
     public void destroyItem(ViewGroup container, int position, Object object) {
 
         container.removeView((View)object);

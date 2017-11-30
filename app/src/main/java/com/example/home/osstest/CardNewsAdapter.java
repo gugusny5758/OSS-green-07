@@ -30,7 +30,7 @@ import java.util.ArrayList;
 
 public class CardNewsAdapter extends RecyclerView.Adapter<CardNewsAdapter.ViewHolder> {
     Context context;
-    ArrayList<CardNewsItem> cardNewsList; //각 Card에 대한 정보를 담고 있음.
+    ArrayList<CardNewsItem> cardNewsList; //각 Card에 대한 정보를 담고 있음.   //Info about each Card
     CardNewsItem cardNewsItem;
 
     public CardNewsAdapter(Context context, ArrayList<CardNewsItem> cardNewsList) {
@@ -40,7 +40,7 @@ public class CardNewsAdapter extends RecyclerView.Adapter<CardNewsAdapter.ViewHo
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        //recycler view에 반복될 아이템 레이아웃 연결
+        //recycler view에 반복될 아이템 레이아웃 연결    //repeated item layout connect to recycler view
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_view_item, null);
         return new ViewHolder(v);
     }
@@ -59,7 +59,7 @@ public class CardNewsAdapter extends RecyclerView.Adapter<CardNewsAdapter.ViewHo
 
         if (cardNewsItem.getCards() != null) {
 
-            //이미지를 가져옴
+            //이미지를 가져옴  //Bring Image
             Uri uri = Uri.fromFile(new File(cardNewsItem.getCards().get(0)));
 
             try {
@@ -82,7 +82,7 @@ public class CardNewsAdapter extends RecyclerView.Adapter<CardNewsAdapter.ViewHo
         else
             holder.fromImg.setImageResource(R.drawable.default_favorite_icon);
 
-        //카드를 클릭했을 때 이벤트
+        //카드를 클릭했을 때 이벤트    //Event for clicking Card
         holder.imageView.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -92,11 +92,11 @@ public class CardNewsAdapter extends RecyclerView.Adapter<CardNewsAdapter.ViewHo
             }
         });
 
-        //공유버튼을 클릭했을 때 이벤트
+        //공유버튼을 클릭했을 때 이벤트  //Event for clicking Share Button
         holder.shareBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                Toast.makeText(v.getContext(), "공유하기", Toast.LENGTH_SHORT).show();
+                Toast.makeText(v.getContext(), "공유하기", Toast.LENGTH_SHORT).show();  //text:Share
                 ((HomeActivity)context).shareImage(cardNewsItem.getCards());
 
 
@@ -112,11 +112,11 @@ public class CardNewsAdapter extends RecyclerView.Adapter<CardNewsAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView fromContent;//어디서 가져왔는지에대한 정보
-        ImageView fromImg;//각 위치에대한 Favorite Icon
-        ImageView imageView;//메인 이미지
-        ImageView shareBtn;//공유 버튼
-        CardView cv;//전체적인 화면 뷰
+        TextView fromContent;//어디서 가져왔는지에대한 정보  //Info about where it is from
+        ImageView fromImg;//각 위치에대한 Favorite Icon   //Favorite Icon on each location
+        ImageView imageView;//메인 이미지    //Main Image
+        ImageView shareBtn;//공유 버튼  //Share Button
+        CardView cv;//전체적인 화면 뷰     //Overall Layout View
 
 
         public ViewHolder(View v) {
