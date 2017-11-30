@@ -8,12 +8,14 @@
 Press the Login button and you can login as Tester. 
 
 ### Create your Card News
+~~~~
 1. Press the menu button (upper-right button with three dots). 
 2. Press the button written as “CardNews 생성”
 3. Create a title for your card news and press OK button
 4. Select your photos from your gallery, at least 3. You can sort your album by pressing button at the upper-right.
 5. If you’re done with choosing your photos, hit the blue “Done” button  
 6. Ta-Dah! Your Card News is created. 
+~~~~
 
 ### Share
 
@@ -23,6 +25,12 @@ You can Share your card news by hitting the button on the left of your Card.
 
 1. Press the button on the upper-right (button with three dots). 
 2. Press the button written as “CardNews 삭제”
+
+
+## Prerequisites
+  We wrote code with below.
+ [Android Studio 3.0](https://developer.android.com/studio/preview/index.html?hl=ko)
+  
 
 
 ## Contribution
